@@ -9,29 +9,30 @@ A comprehensive data engineering and analytics project demonstrating the power o
 
 ## 📋 Table of Contents
 
-- [Overview](#overview)
-- [Features](#features)
-- [Technology Stack](#technology-stack)
-- [Architecture](#architecture)
-- [Project Structure](#project-structure)
-- [Getting Started](#getting-started)
+- [Overview](#-overview)
+- [Features](#-features)
+- [Technology Stack](#-technology-stack)
+- [Architecture](#-architecture)
+- [Project Structure](#-project-structure)
+- [Getting Started](#-getting-started)
   - [Prerequisites](#prerequisites)
   - [Local Installation](#local-installation)
-  - [Docker Installation](#docker-installation)
-- [Usage](#usage)
+  - [Docker Installation](#docker-installation-recommended)
+- [Usage](#-usage)
+  - [Makefile Commands](#makefile-commands)
   - [Incremental ETL](#incremental-etl)
   - [Data Management](#data-management)
   - [Running the Application](#running-the-application)
-- [Data Source](#data-source)
-- [Visualizations](#visualizations)
-- [Benchmarking](#benchmarking)
-- [Testing](#testing)
-- [Configuration](#configuration)
-- [Performance Optimization](#performance-optimization)
-- [Troubleshooting](#troubleshooting)
-- [Contributing](#contributing)
-- [License](#license)
-- [Acknowledgments](#acknowledgments)
+- [Data Source](#-data-source)
+- [Visualizations](#-visualizations)
+- [Benchmarking](#-benchmarking)
+- [Testing](#-testing)
+- [Configuration](#-configuration)
+- [Performance Optimization](#-performance-optimization)
+- [Troubleshooting](#-troubleshooting)
+- [Contributing](#-contributing)
+- [License](#-license)
+- [Acknowledgments](#-acknowledgments)
 
 ## 🎯 Overview
 
@@ -626,10 +627,10 @@ make docker-down
 
 ```bash
 # 1. Edit config/config.yaml - add new years
-# 2. Restart container
-make docker-restart
+# 2. Restart the app
+make docker-rebuild
 
-# 3. Watch it process only new years
+# 3. Watch it process only new years and wait for the app to be ready
 make docker-logs
 ```
 
@@ -1184,14 +1185,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Polars Team** - For blazing-fast data processing
 - **Skyfield Team** - For accurate astronomical calculations
 - **Open Source Community** - For all the incredible tools used in this project
-
-## 📞 Contact
-
-**Author**: dtc77ai
-
-**GitHub**: [@dtc77ai](https://github.com/dtc77ai)
-
-**Project Link**: [https://github.com/dtc77ai/earthquake-olap-showcase](https://github.com/dtc77ai/earthquake-olap-showcase)
 
 ---
 
