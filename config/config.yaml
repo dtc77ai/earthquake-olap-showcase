@@ -1,0 +1,107 @@
+# Earthquake OLAP Showcase Configuration
+
+# Application settings
+app:
+  name: "Earthquake OLAP Analytics"
+  version: "0.1.0"
+  debug: false
+
+# Data source configuration
+data_source:
+  name: "USGS Earthquake Data"
+  base_url: "https://earthquake.usgs.gov/fdsnws/event/1/query"
+  format: "csv"
+  
+  # Year-based loading (preferred for incremental loads)
+  # years_to_load: [2020, 2021, 2022, 2023, 2024]  # List specific years
+  # Or use range:
+  start_year: 2010
+  end_year: 2025
+  
+  # Query parameters
+  params:
+    format: "csv"
+    minmagnitude: 5.5
+    orderby: "time-asc"
+  
+  use_api: true
+
+# Paths configuration
+paths:
+  data_dir: "data"
+  raw_dir: "data/raw"
+  processed_dir: "data/processed"
+  duckdb_dir: "data/duckdb"
+  duckdb_file: "data/duckdb/earthquakes.duckdb"
+  cache_dir: "data/cache"
+
+# DuckDB configuration
+duckdb:
+  database: "earthquakes.duckdb"
+  memory_limit: "8GB"
+  threads: 4
+  temp_directory: "data/duckdb/temp"
+  max_temp_directory_size: "50GB"
+  preserve_insertion_order: false
+  
+  # Schema configuration
+  schema:
+    fact_table: "fact_earthquakes"
+    dim_location: "dim_location"
+    dim_time: "dim_time"
+    dim_magnitude: "dim_magnitude"
+    
+  # Indexes
+  indexes:
+    - table: "fact_earthquakes"
+      columns: ["time_id", "location_id"]
+    - table: "dim_time"
+      columns: ["date", "year", "month"]
+
+# ETL configuration
+etl:
+  chunk_size: 100000
+  download_timeout: 300  # seconds
+  retry_attempts: 3
+  retry_delay: 5  # seconds
+  
+  # Data validation
+  validation:
+    min_magnitude: -2.0
+    max_magnitude: 10.0
+    min_depth: -10.0
+    max_depth: 1000.0
+
+# Benchmark configuration
+benchmark:
+  enabled: true
+  output_dir: "benchmark_results"
+  metrics:
+    - download_time
+    - extraction_time
+    - transformation_time
+    - load_time
+    - total_time
+    - file_size_raw
+    - file_size_processed
+    - row_count
+    - memory_usage
+
+# Streamlit configuration
+streamlit:
+  page_title: "🌍 Earthquake OLAP Analytics"
+  page_icon: "🌍"
+  layout: "wide"
+  initial_sidebar_state: "expanded"
+  
+  # Map configuration
+  map:
+    default_zoom: 2
+    default_center: [20, 0]  # Centered on equator
+    tile_layer: "OpenStreetMap"
+
+# Logging configuration
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/earthquake_olap.log"

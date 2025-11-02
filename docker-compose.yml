@@ -1,0 +1,32 @@
+services:
+  earthquake-olap:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: earthquake-olap-showcase
+    ports:
+      - "8501:8501"
+    volumes:
+      # Mount data directory to persist data between runs
+      - ./data:/app/data
+      # Mount logs directory
+      - ./logs:/app/logs
+      # Mount benchmark results
+      - ./benchmark_results:/app/benchmark_results
+    environment:
+      - PYTHONUNBUFFERED=1
+      - APP_ENV=production
+      - LOG_LEVEL=INFO
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501/_stcore/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    networks:
+      - earthquake-network
+
+networks:
+  earthquake-network:
+    driver: bridge
